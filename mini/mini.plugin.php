@@ -1,15 +1,5 @@
 <?php
 
-	set_include_path(dirname(__FILE__). '/min/lib' . PATH_SEPARATOR . get_include_path());
-
-	require_once 'Minify/Source.php';
-	require_once 'Minify/HTML.php'; 
-	require_once 'Minify/CSS.php'; 
-	require_once 'Minify/HTML.php'; 
-	require_once 'Minify.php';
-	require_once 'Minify/Cache/File.php';
-
-
 class Mini extends Plugin {
 
 	private static $cache_name = 'minify';
@@ -33,7 +23,18 @@ class Mini extends Plugin {
 		
 		Stack::add('template_header_javascript', Site::get_url('user') . "/files/minified.js", 'Minified');
 		
-		if ( !Cache::has( self::$cache_name . '_js' ) ) {
+		if ( !Cache::has( self::$cache_name . '_js' ) || !Cache::has( self::$cache_name . '_css' ) ) {
+			
+				set_include_path(dirname(__FILE__). '/min/lib' . PATH_SEPARATOR . get_include_path());
+				require_once 'Minify/Source.php';
+				require_once 'Minify/HTML.php'; 
+				require_once 'Minify/CSS.php'; 
+				require_once 'Minify/HTML.php'; 
+				require_once 'Minify.php';
+				require_once 'Minify/Cache/File.php';
+		}
+		
+		if ( !Cache::has( self::$cache_name . '_js' ) ) {	
 			$js_stack = array();
 			foreach( $modified as $js ) {
 				$js_stack[] = Site::get_path('base') . str_replace(Site::get_url('habari') . '/', '', $js);
@@ -83,6 +84,13 @@ class Mini extends Plugin {
 
 	public function filter_final_output( $buffer )
 	{
+		set_include_path(dirname(__FILE__). '/min/lib' . PATH_SEPARATOR . get_include_path());
+		require_once 'Minify/Source.php';
+		require_once 'Minify/HTML.php'; 
+		require_once 'Minify/CSS.php'; 
+		require_once 'Minify/HTML.php'; 
+		require_once 'Minify.php';
+		require_once 'Minify/Cache/File.php';
 		return Minify_HTML::minify( $buffer );
 	}
 }
