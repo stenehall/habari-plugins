@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pluggable type="plugin">
+	<name>Minify</name>
+	<version>0.6.4</version>
+	<url>http://broken8.se/</url>
+	<author>eighty4</author>
+	<authorurl>http://broken8.se/</authorurl>
+	<license>Apache License 2.0</license>
+	<description><![CDATA[Minify html,css and js.]]></description>
+	<copyright>2010</copyright>
+</pluggable>
+
